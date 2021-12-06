@@ -25,6 +25,7 @@ def get_campaign_page(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Please log in"
         )
     campaigns = CampaignCrud.get_users_campaign(db, current_user.id, page, page_size)
+    print(campaigns)
     total = CampaignCrud.get_user_campaign_total(db, current_user.id)
     return {"campaigns": campaigns, "size": len(campaigns), "total": total}
 
@@ -45,6 +46,29 @@ def search_campaigns(
     )
     return {"campaigns": campaigns}
 
+@router.post("/campaigns", response_model = schemas.CampaignCreateResponse)
+def create_campaign(
+    data: schemas.CampaignCreate,
+    current_user: schemas.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Validate and add prospects to a campaign"""
+    if not current_user:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="Please log in")
+    campaign = CampaignCrud.create_campaign(db, current_user.id, data)
+    return {"campaign": campaign}
+
+@router.delete("/campaigns/{campaign_id}", status_code=204)
+def delete_campagin(
+    campaign_id: int,
+    current_user: schemas.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Validate and add prospects to a campaign"""
+    if not current_user:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="Please log in")
+    CampaignCrud.delete_campaign(db, campaign_id)
+    return 
 
 @router.post(
     "/campaigns/{campaign_id}/prospects", response_model=schemas.AddToCampaignsResponse

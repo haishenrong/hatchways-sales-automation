@@ -1,0 +1,13 @@
+### These only work if Validation is commented out
+### For testing only
+POST http://localhost:3001/api/campaigns
+Content-Type: application/json
+
+{
+    "name":"alice"
+}
+###
+
+DELETE http://localhost:3001/api/campaigns/22
+
+###

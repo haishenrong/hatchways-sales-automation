@@ -18,6 +18,8 @@ class Campaign(BaseModel):
 class CampaignCreate(BaseModel):
     name: str
 
+class CampaignCreateResponse(BaseModel):
+    campaign: Campaign
 
 class CampaignSearch(BaseModel):
     name: str

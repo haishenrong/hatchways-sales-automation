@@ -62,6 +62,12 @@ class CampaignCrud:
         return campaign
 
     @classmethod
+    def delete_campaign(cls, db: Session, campaign_id: int):
+        db.query(Campaign).filter(Campaign.id == campaign_id).delete()
+        db.commit()
+        return
+
+    @classmethod
     def get_existing_campaign_prospects(cls, db: Session, campaign_id: int) -> Set[int]:
         res = (
             db.query(CampaignProspect.prospect_id)

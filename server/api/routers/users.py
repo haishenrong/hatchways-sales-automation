@@ -10,7 +10,6 @@ from api.dependencies.db import get_db
 
 router = APIRouter(prefix="/api", tags=["user"])
 
-
 @router.get("/user", response_model=schemas.User)
 def get_authenticated_user(
     current_user: schemas.User = Depends(get_current_user),
