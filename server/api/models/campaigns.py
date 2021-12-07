@@ -14,6 +14,7 @@ class Campaign(Base):
     id = Column(BigInteger, primary_key=True, autoincrement=True, unique=True)
     name = Column(String, primary_key=True)
     user_id = Column(BigInteger, ForeignKey("users.id"), primary_key=True)
+    #prospects = relationship("CampaignProspect", back_populates="campaign")
 
     user = relationship("User", back_populates="campaigns", foreign_keys=[user_id])
 

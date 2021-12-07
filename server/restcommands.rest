@@ -1,13 +1,22 @@
 ### These only work if Validation is commented out
 ### For testing only
+GET http://localhost:3001/api/campaigns
+###
 POST http://localhost:3001/api/campaigns
 Content-Type: application/json
 
 {
-    "name":"alice"
+    "name":"bob"
 }
 ###
 
 DELETE http://localhost:3001/api/campaigns/22
 
-###
+### Add prospect to campaign
+### Test user id: 3 Test campaign id: 23
+POST http://localhost:3001/api/campaigns/23/prospects
+Content-Type: application/json
+
+{
+    "prospect_ids": [3, 15]
+}

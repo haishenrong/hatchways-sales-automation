@@ -31,11 +31,17 @@ class CampaignCrud:
             .limit(page_size)
             .all()
         )
+        for camp in res:
+            camp.prospects_count = db.query(CampaignProspect).filter(CampaignProspect.campaign_id == camp.id).count()
         return res
 
     @classmethod
     def get_user_campaign_total(cls, db: Session, user_id: int) -> int:
         return db.query(Campaign).filter(Campaign.user_id == user_id).count()
+
+    @classmethod
+    def get_campaign_prospect_total(cls, db: Session, campaign_id: int) -> int:
+        return db.query(CampaignProspect).filter(CampaignProspect.campaign_id == campaign_id).count()
 
     @classmethod
     def get_user_campaign_from_name_fragment(

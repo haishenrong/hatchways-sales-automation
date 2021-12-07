@@ -25,7 +25,7 @@ def get_campaign_page(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Please log in"
         )
     campaigns = CampaignCrud.get_users_campaign(db, current_user.id, page, page_size)
-    print(campaigns)
+    print(campaigns[0])
     total = CampaignCrud.get_user_campaign_total(db, current_user.id)
     return {"campaigns": campaigns, "size": len(campaigns), "total": total}
 
